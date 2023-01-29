@@ -4,7 +4,7 @@ const todoRouter = express.Router()
 
 todoRouter.post('/', create)
 todoRouter.get('/', get)
-todoRouter.put('/', update)
-todoRouter.delete('/', deleteTodos)
+todoRouter.put('/:id', update)
+todoRouter.delete('/:id', deleteTodos)
 
 module.exports = { todoRouter }

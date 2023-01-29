@@ -2,10 +2,9 @@ const { TodoModel } = require('../db')
 
 const get = async (req, res) => {
     try {
-        const { filter } = req.query
+        const { sortBy } = req.query
         const response = await TodoModel.find({ isDeleted: false }).sort({
-            updatedAt: filter || 'asc',
-            test: 1,
+            updatedAt: sortBy || 'asc',
         })
         res.send(response)
     } catch (error) {
@@ -14,18 +13,22 @@ const get = async (req, res) => {
 }
 const create = async (req, res) => {
     try {
-        const { content, flag, status } = req.body
-        const newTodo = await TodoModel.create({ content, flag, status })
-        const response = await newTodo.save()
-        res.send(response)
+        const { content, priority, completeStatus } = req.body
+        const newTodo = await TodoModel.create({
+            content,
+            priority,
+            completeStatus,
+        })
+        res.send(newTodo)
     } catch (error) {
         res.status(400).send(error)
     }
 }
 const update = async (req, res) => {
     try {
-        const { id, query } = req.body
-        const updatedTodo = await TodoModel.findOneAndUpdate({ _id: id }, query, {
+        const { id } = req.params
+        const { data } = req.body
+        const updatedTodo = await TodoModel.findOneAndUpdate({ _id: id }, data, {
             new: true,
         })
         res.send(updatedTodo)
@@ -35,9 +38,11 @@ const update = async (req, res) => {
 }
 const deleteTodos = async (req, res) => {
     try {
-        const { id } = req.body
+        const { id } = req.params
         await TodoModel.findOneAndUpdate({ _id: id }, { isDeleted: true })
-        res.send('success')
+        res.send({
+            success: true,
+        })
     } catch (error) {
         res.status(400).send(error)
     }

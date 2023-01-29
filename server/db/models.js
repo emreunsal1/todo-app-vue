@@ -5,15 +5,15 @@ const todoModelName = 'todo'
 const todoSchema = new mongoose.Schema(
     {
         content: String,
-        flag: {
+        priority: {
             type: String,
-            enums: ['high', 'medium', 'low'],
-            default: 'medium',
+            enums: ['low', 'mid', 'high'],
+            default: 'mid',
         },
-        status: {
+        completeStatus: {
             type: 'String',
-            enums: ['done', 'noteDone'],
-            default: 'noteDone',
+            enums: ['done', 'notDone'],
+            default: 'notDone',
         },
         isDeleted: {
             type: Boolean,
