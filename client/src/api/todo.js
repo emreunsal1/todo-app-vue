@@ -1,10 +1,12 @@
 import instance from "./index";
 
-const get = async (filter = null) => {
+const get = async (sortBy = undefined) => {
   try {
-    const response = await instance.get(
-      `/todo/${filter && "?fiter=" + filter}`
-    );
+    const response = await instance.get(`/todo/`, {
+      params: {
+        sortBy,
+      },
+    });
     return response.data;
   } catch (error) {
     console.log("error Message Get Todo", error.message);
@@ -12,16 +14,16 @@ const get = async (filter = null) => {
   }
 };
 
-const create = async (query) => {
+const create = async (data) => {
   try {
-    const { content, flag, status } = query;
+    const { content, priority, completeStatus } = data;
     if (!content) {
       return false;
     }
     const response = await instance.post("/todo", {
       content,
-      flag,
-      status,
+      priority,
+      completeStatus,
     });
     return response.data;
   } catch (error) {
@@ -32,13 +34,12 @@ const create = async (query) => {
 
 const update = async (id, query) => {
   try {
-    const { content, flag, status } = query;
-    const response = await instance.put("/todo", {
-      id: id,
-      query: {
+    const { content, priority, completeStatus } = query;
+    const response = await instance.put(`/todo/${id}`, {
+      data: {
         content,
-        flag,
-        status,
+        priority,
+        completeStatus,
       },
     });
     return response.data;
@@ -50,9 +51,7 @@ const update = async (id, query) => {
 
 const deleteTodo = async (id) => {
   try {
-    const response = await instance.delete("/todo", {
-      id,
-    });
+    const response = await instance.delete(`/todo/${id}`);
     return response.data;
   } catch (error) {
     console.log("error Message Delete Todo", error.message);
