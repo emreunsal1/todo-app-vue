@@ -4,7 +4,7 @@ const get = async (req, res) => {
     try {
         const { sortBy } = req.query
         const response = await TodoModel.find({ isDeleted: false }).sort({
-            updatedAt: sortBy || 'asc',
+            createdAt: sortBy || 'asc',
         })
         res.send(response)
     } catch (error) {
