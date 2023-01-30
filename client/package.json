@@ -9,8 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "ant-design-vue": "^2.2.8",
+    "axios": "^1.2.6",
     "sass": "^1.57.1",
-    "vue": "^3.2.45"
+    "vue": "^3.2.45",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
